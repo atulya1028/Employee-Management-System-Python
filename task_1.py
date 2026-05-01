@@ -10,41 +10,99 @@ employee_details = {
 }
 
 def add_employee_details(employee_details):
-    emp_id = int(input("Enter employee ID: "))
+    try:
+        emp_id = int(input("Enter employee ID: "))
+    except ValueError:
+        print("Employee ID must be a number")
+        return
+
     if emp_id in employee_details:
         print("Employee already exists")
-    else:
-        name = input("Enter employee name: ")
-        age = input("Enter employee age: ")
-        department = input("Enter employee department: ")
-        salary = input("Enter employee salary: ")
-        employee_details[emp_id] = {
-            'name': name,
-            'age': age,
-            'department': department,
-            'salary': salary
+        return
+
+    name = input("Enter employee name: ")
+
+    try:
+        age = int(input("Enter employee age: "))
+    except ValueError:
+        print("Employee age must be a number")
+        return
+
+    department = input("Enter employee department: ")
+
+    try:
+        salary = int(input("Enter employee salary: "))
+    except ValueError:
+        print("Employee salary must be a number")
+        return
+
+    employee_details[emp_id] = {
+        'name': name,
+        'age': age,
+        'department': department,
+        'salary': salary
     }
     print("Employee added successfully")
 
-#View Employees In table format
 def view_employees(employee_details):
-    print("----------------------------------------------")
-    for emp_id, employee in employee_details.items():
-        print("Employee ID: ", emp_id)
-        print("Name: ", employee['name'])
-        print("Age: ", employee['age'])
-        print("Department: ", employee['department'])
-        print("Salary: ", employee['salary'])
-
-def search_employee(employee_details):
-    emp_id = int(input("Enter employee ID: "))
-    if emp_id in employee_details:
-        print("Name: ", employee_details[emp_id]['name'])
-        print("Age: ", employee_details[emp_id]['age'])
-        print("Department: ", employee_details[emp_id]['department'])
-        print("Salary: ", employee_details[emp_id]['salary'])
-    else:
+    if not employee_details:
         print("Employee not found")
+        return
+
+    print("\n{:>10} {:>15} {:>10} {:>15} {:>10}".format(
+        "ID",
+        "Name",
+        "Age",
+        "Department",
+        "Salary"
+    ))
+    print("-" * 65)
+
+    for emp_id, emp in employee_details.items():
+        print("\n{:>10} {:>15} {:>10} {:>15} {:>10}".format(
+            emp_id,
+            emp['name'],
+            emp['age'],
+            emp['department'],
+            emp['salary']
+        ))
+def search_employee(employee_details):
+
+    try:
+        emp_id = int(input("Enter employee ID: "))
+    except ValueError:
+        print("Invalid ID")
+        return
+
+    print("\n{:>10} {:>15} {:>10} {:>15} {:>10}".format(
+        "ID",
+        "Name",
+        "Age",
+        "Department",
+        "Salary"
+    ))
+    print("-" * 65)
+
+    if emp_id in employee_details:
+        emp = employee_details[emp_id]
+
+        print("\n{:>10} {:>15} {:>10} {:>15} {:>10}".format(
+            'ID',
+            'Name',
+            'Age',
+            'Department',
+            'Salary'
+        ))
+        print("-" * 65)
+
+        print("{:>10} {:>15} {:>10} {:>15} {:>10}".format(
+            emp_id,
+            emp['name'],
+            emp['age'],
+            emp['department'],
+            emp['salary']
+        ))
+
 
 def main():
 
@@ -54,7 +112,10 @@ def main():
         print("3. Search one employee details")
         print("4. Exit")
 
-        choice = int(input("Enter your choice: "))
+        try:
+            choice = int(input("Enter your choice: "))
+        except ValueError:
+            print("Invalid choice")
         if choice == 1:
 
             add_employee_details(employee_details)
