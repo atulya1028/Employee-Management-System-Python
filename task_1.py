@@ -26,8 +26,15 @@ def add_employee_details(employee_details):
     }
     print("Employee added successfully")
 
+#View Employees In table format
 def view_employees(employee_details):
-    print("List of all employees: ",employee_details)
+    print("----------------------------------------------")
+    for emp_id, employee in employee_details.items():
+        print("Employee ID: ", emp_id)
+        print("Name: ", employee['name'])
+        print("Age: ", employee['age'])
+        print("Department: ", employee['department'])
+        print("Salary: ", employee['salary'])
 
 def search_employee(employee_details):
     emp_id = int(input("Enter employee ID: "))
